@@ -132,14 +132,19 @@ td button {
     font-size: 0.85rem;
 }
 
-td button:first-of-type {
-    background-color: #f0ad4e;
-    color: #fff;
+.btn-edit {
+    background-color: #FF9292;
+    color: #000000;
 }
 
-td button:last-of-type {
-    background-color: #d9534f;
-    color: #fff;
+.btn-details {
+    background-color: #FFE2E2;
+    color: #000000;
+}
+
+.btn-delete {
+    background-color: #FD7979;
+    color: #000000;
 }
 
 /* ===== Form ===== */
