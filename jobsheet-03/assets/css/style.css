@@ -248,3 +248,11 @@ footer {
         max-width: 100%;
     }
 }
+
+/* questions no 1 */
+
+@media (min-width: 1400px) {
+  main {
+    max-width: 1200px;
+  }
+}
