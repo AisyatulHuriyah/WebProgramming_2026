@@ -187,9 +187,8 @@ footer {
 }
 
 /* ===== Tabel Responsif ===== */
-.responsiveTable {
+.table-responsive, pre { /*question no 3*/
     overflow-x: auto;
-    overflow-y: auto;
 }
 
 /* ===== Hamburger Menu (checkbox hack) ===== */
