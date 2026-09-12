@@ -135,3 +135,26 @@ The existing pages (Home, Add/List Books, Add/List Members — Jobsheets 1-3) do
 +-----------------------------------------------------------------------+
 | (c) 2026 SIMPUS-Mini — Library System                                 |
 +-----------------------------------------------------------------------+
+
+### 2. User Flow: Search Overdue Loans
+
+```text
+[Librarian Login]
+       |
+       v
+[Open Dashboard]
+       |
+       v
+[Select "Overdue Loans" Menu]
+       |
+       v
+[System Checks Due Date vs Today]
+       |
+       +---> (No Overdue Loans) ---> [Display "No Overdue Loans"]
+       |
+       | (Has Overdue Loans)
+       v
+[Display List of Overdue Members & Days Late]
+       |
+       v
+[Select Member & Send Notification/Reminder]
