@@ -102,3 +102,36 @@ The existing pages (Home, Add/List Books, Add/List Members — Jobsheets 1-3) do
 - Accent colors, navbar typography, and table/card styles follow `assets/css/style.css` built in Jobsheets 2-3.
 - Navbar will add a **Borrowing** menu and login status indicator (officer name / Logout button) starting implementation in Jobsheet 10.
 - Edge cases to handle during implementation: books with zero stock cannot be selected in borrowing forms; members with overdue fees are validated in Jobsheet 12 (independent assignment).
+
+
+## Exercise Jobsheet 4
+
+### 1. Wireframe: Register New Member (Guest Actor)
+```text
++-----------------------------------------------------------------------+
+| SIMPUS-Mini | Register New Member                                     |
++-----------------------------------------------------------------------+
+| [Home]  [Book List]  [Register]  [Login]                              |
++-----------------------------------------------------------------------+
+|                                                                       |
+|  Register New Member                                                  |
+|  -------------------------------------------------------------------  |
+|                                                                       |
+|  Full Name *                                                          |
+|  [_______________________________________]                            |
+|                                                                       |
+|  Email Address *                                                      |
+|  [_______________________________________]                            |
+|                                                                       |
+|  Phone Number                                                         |
+|  [_______________________________________]                            |
+|                                                                       |
+|  Address                                                              |
+|  [_______________________________________]                            |
+|  [_______________________________________]                            |
+|                                                                       |
+|  [ Register Member ]   [ Cancel ]                                     |
+|                                                                       |
++-----------------------------------------------------------------------+
+| (c) 2026 SIMPUS-Mini — Library System                                 |
++-----------------------------------------------------------------------+
