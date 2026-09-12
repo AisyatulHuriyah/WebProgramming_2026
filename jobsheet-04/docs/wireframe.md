@@ -135,6 +135,7 @@ The existing pages (Home, Add/List Books, Add/List Members — Jobsheets 1-3) do
 +-----------------------------------------------------------------------+
 | (c) 2026 SIMPUS-Mini — Library System                                 |
 +-----------------------------------------------------------------------+
+```
 
 ### 2. User Flow: Search Overdue Loans
 
@@ -158,3 +159,10 @@ The existing pages (Home, Add/List Books, Add/List Members — Jobsheets 1-3) do
        |
        v
 [Select Member & Send Notification/Reminder]
+```
+
+### 3. Edge Cases Identification
+1. Duplicate Active Borrowing: If a member tries to borrow a book they currently hold and haven't returned, the system prevents the transaction and displays a warning message.
+2. Damaged or Lost Book Status: Books marked as damaged or lost are automatically disabled and cannot be selected in the borrowing form.
+3. Unpaid Overdue Fines: Members with outstanding late fees are restricted from borrowing new books until all fines are paid off.
+```
