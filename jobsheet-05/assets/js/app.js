@@ -89,6 +89,18 @@ function initFormValidation() {
             }
         }
 
+        const isbn = form.querySelector("[name='isbn']");
+        if (isbn && isbn.value.trim() !== "") {
+            const isbnPattern = /^[0-9-]+$/;
+
+            if (!isbnPattern.test(isbn.value.trim())) {
+                showError(isbn, "ISBN can only contain digits and hyphens.");
+                valid = false;
+            } else {
+                removeError(isbn);
+            }
+        }
+
         const stock = form.querySelector("[name='stock']");
         if (stock) {
             const value = parseInt(stock.value, 10);
