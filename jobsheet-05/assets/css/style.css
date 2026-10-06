@@ -228,15 +228,8 @@ footer {
     main section:nth-of-type(2) {
         grid-template-columns: repeat(2, 1fr);
     }
+}
 
-    /* Smartphone and below */
-    @media (max-width: 480px) {
-        main section:nth-of-type(2) {
-            grid-template-columns: 1fr;
-        }
-    }
-}
-}
 
 /* Mobile */
 @media (max-width: 480px) {
@@ -249,14 +242,19 @@ footer {
     }
 
     header nav {
-        display: none;
+        max-height: 0;
+        overflow: hidden;
+        opacity: 0;
         width: 100%;
         order: 3;
-        margin-top: 1rem;
+        margin-top: 0;
+        transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out, margin-top 0.3s ease-in-out;
     }
 
     header nav.nav-open {
-        display: block;
+        max-height: 500px;
+        opacity: 1;
+        margin-top: 1rem;
     }
 
     header nav ul {
