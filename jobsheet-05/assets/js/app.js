@@ -33,7 +33,8 @@ function initTableFilter() {
         const keyword = input.value.toLowerCase();
         const rows = table.querySelectorAll("tbody tr");
         rows.forEach(function (row) {
-            const text = row.textContent.toLowerCase();
+            const firstTd = row.querySelector("td");
+            const text = firstTd ? firstTd.textContent.toLowerCase() : "";
             row.style.display = text.includes(keyword) ? "" : "none";
         });
     });
