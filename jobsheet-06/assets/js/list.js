@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const path = window.location.pathname;
 
     if (path.includes("books/list")) {
-        loadList("books.json", ["title", "author", "year", "stock"]);
+        loadList("books.json", ["title", "author", "year", "stock", "category"]);
     } else if (path.includes("members/list")) {
         loadList("members.json", ["member_no", "name", "address", "phone_no"]);
     }
