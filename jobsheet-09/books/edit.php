@@ -22,7 +22,7 @@ if (!$book) {
 <section>
     <h2>Edit Book</h2>
 
-    <form id="form-tambah" method="post" action="process_edit.php">
+    <form id="form-tambah" method="post" action="process_edit.php" onsubmit="return confirm('Are you sure you want to update this data?')">
 
         <input type="hidden" name="id" value="<?php echo $book['id']; ?>">
 
