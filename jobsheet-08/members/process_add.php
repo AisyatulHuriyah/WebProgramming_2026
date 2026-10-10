@@ -21,18 +21,35 @@ if (!empty($errors)) {
     exit;
 }
 
-$stmt = $pdo->prepare(
-    "INSERT INTO members (name, member_id, address, phone)
-     VALUES (:name, :member_id, :address, :phone)
-     RETURNING id"
-);
-$stmt->execute([
-    'name' => $name,
-    'member_id' => $memberId,
-    'address' => $address,
-    'phone' => $phone,
-]);
+try {
+    $stmt = $pdo->prepare(
+        "INSERT INTO members (name, member_id, address, phone)
+         VALUES (:name, :member_id, :address, :phone)
+         RETURNING id"
+    );
+    $stmt->execute([
+        'name' => $name,
+        'member_id' => $memberId,
+        'address' => $address,
+        'phone' => $phone,
+    ]);
 
-$_SESSION['flash'] = ['type' => 'success', 'message' => 'Member added successfully.'];
-header('Location: list.php');
-exit;
+    $_SESSION['flash'] = ['type' => 'success', 'message' => 'Member added successfully.'];
+    header('Location: list.php');
+    exit;
+
+} catch (PDOException $e) {
+    if ($e->getCode() === '23505') {
+        $_SESSION['flash'] = [
+            'type' => 'error',
+            'message' => 'Member ID already exists. Please use a different one.'
+        ];
+    } else {
+        $_SESSION['flash'] = [
+            'type' => 'error',
+            'message' => 'Failed to add member: ' . $e->getMessage()
+        ];
+    }
+    header('Location: add.php');
+    exit;
+}
