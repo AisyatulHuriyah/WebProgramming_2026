@@ -43,7 +43,7 @@ if (!$book) {
 
         <p>
             <label for="isbn">ISBN</label><br>
-            <input type="text" id="isbn" name="isbn" value="<?php echo htmlspecialchars($book['isbn']); ?>" required>
+            <input type="text" id="isbn" name="isbn" value="<?php echo htmlspecialchars($book['isbn'] ?? ''); ?>" required>
         </p>
 
         <p>
