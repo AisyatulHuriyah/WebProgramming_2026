@@ -9,20 +9,18 @@ function initNavToggle() {
     });
 }
 
-// ===== Delete confirmation (front-end only, not yet sent to the server) =====
-// Uses event delegation on document because table rows are rendered by PHP
-// (see books/list.php and members/list.php), so a .btn-delete button might
-// not exist yet at DOMContentLoaded.
-function initDeleteConfirm() {
-    document.addEventListener("click", function (e) {
-        const btn = e.target.closest(".btn-delete");
-        if (!btn) return;
+// ===== Delete confirmation (now submits to the server) =====
+function initHapusConfirm() {
+    document.addEventListener("submit", function (e) {
+        const form = e.target;
+        if (!form.classList.contains("form-hapus")) return;
 
-        const row = btn.closest("tr");
-        const name = row ? row.querySelector("td")?.textContent : "this item";
-        const confirmed = confirm("Are you sure you want to delete \"" + name + "\"?");
-        if (confirmed && row) {
-            row.remove();
+        const row = form.closest("tr");
+        const nama = row ? row.querySelector("td")?.textContent : "this data";
+        const yakin = confirm("Are you sure you want to delete " + nama + "?");
+
+        if (!yakin) {
+            e.preventDefault();
         }
     });
 }
@@ -112,7 +110,7 @@ function initFormValidation() {
 
 document.addEventListener("DOMContentLoaded", function () {
     initNavToggle();
-    initDeleteConfirm();
+    initHapusConfirm();
     initTableFilter();
     initFormValidation();
 });
