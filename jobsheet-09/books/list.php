@@ -12,11 +12,11 @@ $offset = ($page - 1) * $perPage;
 $keyword = trim($_GET['keyword'] ?? '');
 
 if ($keyword !== '') {
-    $countStmt = $pdo->prepare("SELECT COUNT(*) FROM books WHERE title ILIKE :keyword");
+    $countStmt = $pdo->prepare("SELECT COUNT(*) FROM books WHERE title ILIKE :keyword OR author ILIKE :keyword");
     $countStmt->execute(['keyword' => '%' . $keyword . '%']);
     $totalRows = $countStmt->fetchColumn();
 
-    $stmt = $pdo->prepare("SELECT * FROM books WHERE title ILIKE :keyword ORDER BY id DESC LIMIT :limit OFFSET :offset");
+    $stmt = $pdo->prepare("SELECT * FROM books WHERE title ILIKE :keyword OR author ILIKE :keyword ORDER BY id DESC LIMIT :limit OFFSET :offset");
     $stmt->bindValue('keyword', '%' . $keyword . '%');
 } else {
     $totalRows = $pdo->query("SELECT COUNT(*) FROM books")->fetchColumn();
