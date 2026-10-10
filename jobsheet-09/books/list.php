@@ -6,25 +6,34 @@ require __DIR__ . '/../includes/connection.php';
 $flash = $_SESSION['flash'] ?? null;
 unset($_SESSION['flash']);
 
-$keyword = $_GET['keyword'] ?? '';
+$perPage = 5;
+$page = max(1, (int) ($_GET['page'] ?? 1));
+$offset = ($page - 1) * $perPage;
+$keyword = trim($_GET['keyword'] ?? '');
 
 if ($keyword !== '') {
-    $stmt = $pdo->prepare("
-        SELECT * FROM books 
-        WHERE title ILIKE :keyword 
-        ORDER BY id DESC
-    ");
-    $stmt->execute(['keyword' => '%' . $keyword . '%']);
-    $books = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $countStmt = $pdo->prepare("SELECT COUNT(*) FROM books WHERE title ILIKE :keyword");
+    $countStmt->execute(['keyword' => '%' . $keyword . '%']);
+    $totalRows = $countStmt->fetchColumn();
+
+    $stmt = $pdo->prepare("SELECT * FROM books WHERE title ILIKE :keyword ORDER BY id DESC LIMIT :limit OFFSET :offset");
+    $stmt->bindValue('keyword', '%' . $keyword . '%');
 } else {
-    $books = $pdo->query("SELECT * FROM books ORDER BY id DESC")->fetchAll(PDO::FETCH_ASSOC);
+    $totalRows = $pdo->query("SELECT COUNT(*) FROM books")->fetchColumn();
+    $stmt = $pdo->prepare("SELECT * FROM books ORDER BY id DESC LIMIT :limit OFFSET :offset");
 }
+
+$stmt->bindValue('limit', $perPage, PDO::PARAM_INT);
+$stmt->bindValue('offset', $offset, PDO::PARAM_INT);
+$stmt->execute();
+$books = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$totalPages = max(1, (int) ceil($totalRows / $perPage));
 ?>
         <section>
             <h2>Book List</h2>
 
             <?php if ($flash): ?>
-                <p class="flash flash-<?php echo $flash['type']; ?>"><?php echo $flash['message']; ?></p>
+                <p class="flash flash-<?php echo $flash['type']; ?>"><?php echo $flash['pesan']; ?></p>
             <?php endif; ?>
 
             <form method="get" action="list.php" class="search-box">
@@ -71,8 +80,11 @@ if ($keyword !== '') {
                             <td><?php echo $book['year']; ?></td>
                             <td><?php echo $book['stock']; ?></td>
                             <td>
-                                <button type="button">Edit</button>
-                                <button type="button" class="btn-delete">Delete</button>
+                                <a href="edit.php?id=<?php echo $book['id']; ?>" class="btn-edit">Edit</a>
+                                <form class="form-hapus" method="post" action="delete.php">
+                                    <input type="hidden" name="id" value="<?php echo $book['id']; ?>">
+                                    <button type="submit" class="btn-hapus">Delete</button>
+                                </form>
                             </td>
                             <td>
                                 <?php echo !empty($book['date_added']) 
@@ -85,5 +97,13 @@ if ($keyword !== '') {
                 </tbody>
             </table>
             </div>
+
+            <nav class="pagination">
+                <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                    <a href="list.php?page=<?php echo $i; ?><?php echo $keyword !== '' ? '&keyword=' . urlencode($keyword) : ''; ?>" class="<?php echo $i === $page ? 'active' : ''; ?>">
+                        <?php echo $i; ?>
+                    </a>
+                <?php endfor; ?>
+            </nav>
         </section>
 <?php include __DIR__ . '/../includes/footer.php'; ?>
